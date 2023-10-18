@@ -1,0 +1,53 @@
+Add Heapsort algorithm
+
+.add() Method
+The .add() method is used in the MaxHeap class to add new values to a max-heap while maintaining the max-heap property that a parent must have a larger value than its children.
+
+def add(self, element):
+  self.count += 1
+  print("Adding: {0} to {1}".format(element, self.heap_list))
+  self.heap_list.append(element)
+  self.heapify_up()
+.heapify_up() Method
+The .heapify_up() method is used in the MaxHeap class to rebalance the heap data structure after an element is added to it.
+
+Starting at the end of the heap where the new element is placed, the new element is compared to its parent value. If the parent has a smaller value than the child, the values swap places. This process repeats itself until an element has no parent value.
+
+def heapify_up(self):
+  print("Heapifying up")
+  idx = self.count
+  while self.parent_idx(idx) > 0:
+    child = self.heap_list[idx]
+    parent = self.heap_list[self.parent_idx(idx)]
+    if parent < child:
+      print("swapping {0} with {1}".format(parent, child))
+      self.heap_list[idx] = parent
+      self.heap_list[self.parent_idx(idx)] = child
+    idx = self.parent_idx(idx)
+  print("Heap Restored {0}".format(self.heap_list))
+Heapsort
+Heapsort is a sorting algorithm that utilizes the heap data structure to sort an unordered list of data.
+
+To implement a heapsort algorithm, take the following steps:
+
+Add items of an unsorted list into a max-heap.
+While there is at least one element in the heap, remove the root of the heap and place it at the beginning of a list that will hold the sorted values. Whenever the root is extracted, the heap must be rebalanced.
+Once the heap is empty, return the sorted list.
+
+
+def heapsort(lst):
+  sort = []
+  max_heap = MaxHeap()
+  # Add items of an unsorted list into a max-heap.
+  for idx in lst:
+    max_heap.add(idx)
+  # While there is at least one element in the heap, remove the root of the heap and place it at the beginning of a list that will hold the sorted values. Whenever the root is extracted, the heap must be rebalanced.
+  while max_heap.count > 0:
+    max_value = max_heap.retrieve_max()
+    sort.insert(0, max_value)
+  # Return the sorted list
+  return sort
+
+my_list = [99, 22, 61, 10, 21, 13, 23]
+sorted_list = heapsort(my_list)
+print(sorted_list) # Prints: [10, 13, 21, 22, 23, 61, 99]
